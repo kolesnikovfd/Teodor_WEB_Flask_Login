@@ -4,7 +4,7 @@ from forms.user import RegisterForm, LoginForm
 from forms.new import NewsForm
 from data.news import News
 from data.users import User
-from data import db_session
+from data import db_session, news_api
 from flask_login import LOGIN_MESSAGE, login_user, login_required, logout_user, current_user, LoginManager
 
 app = Flask(__name__)
@@ -22,6 +22,7 @@ def load_user(user_id):
 
 def main():
     db_session.global_init("db/blogs.db")
+    app.register_blueprint(news_api.blueprint)
     app.run()
 
 
