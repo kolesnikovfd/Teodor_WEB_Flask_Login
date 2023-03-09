@@ -4,13 +4,11 @@ from forms.user import RegisterForm, LoginForm
 from forms.new import NewsForm
 from data.news import News
 from data.users import User
-from data import db_session, news_api, news_resources, users_resource
+from data import db_session
 from flask_login import LOGIN_MESSAGE, login_user, login_required, logout_user, current_user, LoginManager
-from flask_restful import reqparse, abort, Api, Resource
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
-api = Api(app)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -148,18 +146,6 @@ def news_delete(id):
 
 def main():
     db_session.global_init("db/blogs.db")
-    #app.register_blueprint(news_api.blueprint)
-
-    # для списка объектов
-    api.add_resource(news_resources.NewsListResource, '/api/news')
-    # для одного объекта
-    api.add_resource(news_resources.NewsResource, '/api/news/<int:news_id>')
-
-    # для списка объектов
-    api.add_resource(users_resource.UsersListResource, '/api/users')
-    # для одного объекта
-    api.add_resource(users_resource.UsersResource, '/api/users/<int:user_id>')
-
     app.run()
 
 
